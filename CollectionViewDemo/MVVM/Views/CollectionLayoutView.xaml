@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CollectionViewDemo.MVVM.Views.CollectionLayoutView"
+             xmlns:viewmodel="clr-namespace:CollectionViewDemo.MVVM.ViewModels"
+             Title="CollectionLayoutView">
+
+    <ContentPage.BindingContext>
+        <viewmodel:CollectionLayoutViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid RowDefinitions=".1*,.9*">
+        <Button Text="Clear Selections"
+                Command="{Binding ClearCommand}" />
+                <!--
+        <CollectionView ItemsSource="{Binding Products}"
+                    SelectionMode="Single"
+                    SelectedItem="{Binding SelectedProduct2}"
+                    SelectionChangedCommand="{Binding ProductChanged2Command}"
+                    Grid.Row="1"
+                    >
+                    -->
+    <CollectionView ItemsSource="{Binding Products}"
+                    SelectionMode="Multiple"
+                    SelectedItems="{Binding SelectedProducts2}"
+                    SelectionChangedCommand="{Binding ProductChangeds2Command}"
+                    Grid.Row="1"
+                    >
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout Orientation="Horizontal" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Margin="15" WidthRequest="200" HeightRequest="250">
+                        <VerticalStackLayout>
+                            <Image Source="{Binding Image}" />
+                            <Label Text="{Binding Name}" HorizontalTextAlignment="Center" />
+                            <Label Text="{Binding Price, StringFormat='Price:{0}'}" HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>

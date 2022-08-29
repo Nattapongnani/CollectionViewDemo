@@ -9,8 +9,47 @@
         <DataTemplates:ProductDataTemplateSelector x:Key="ProductTemplates" />
     </ContentPage.Resources>
 
-    <CollectionView ItemsSource="{Binding Products}" 
-                    ItemTemplate="{StaticResource ProductTemplates}">
-    </CollectionView>
+    <RefreshView Command="{Binding RefreshCommand}"
+                 IsRefreshing="{Binding IsRefreshing}">
+                 <!-- ItemsLayout="HorizontalList"-->
+        <CollectionView ItemsSource="{Binding Products}" 
+                        ItemTemplate="{StaticResource ProductTemplates}"
+                        RemainingItemsThreshold="1"
+                        RemainingItemsThresholdReachedCommand="{Binding ThresholdReachedCommand}"
+                        SelectionMode="Single"
+                        SelectedItem="{Binding SelectedProduct}"
+                        SelectionChangedCommand="{Binding ProductChangedCommand}"
+                        >
+                        <!--
+        <CollectionView ItemsSource="{Binding Products}" 
+                        ItemTemplate="{StaticResource ProductTemplates}"
+                        RemainingItemsThreshold="1"
+                        RemainingItemsThresholdReachedCommand="{Binding ThresholdReachedCommand}"
+                        SelectionMode="Multiple"
+                        SelectedItems="{Binding SelectedProducts}"
+                        SelectionChangedCommand="{Binding ProductChangedCommand}"
+                        >
+                        -->
+            <CollectionView.Header>
+                <Frame BackgroundColor="Blue">
+                    <Label FontAttributes="Bold" 
+                           Text="Products"
+                           TextColor="White" />
+                </Frame>
+            </CollectionView.Header>
+            <CollectionView.Footer>
+                <HorizontalStackLayout>
+                    <Label FontSize="Title">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Powered by:" TextColor="Black"/>
+                                <Span Text=".NET MAUI" TextColor="Black"/>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </HorizontalStackLayout>
+            </CollectionView.Footer>
+        </CollectionView>
+    </RefreshView>
 
 </ContentPage>
