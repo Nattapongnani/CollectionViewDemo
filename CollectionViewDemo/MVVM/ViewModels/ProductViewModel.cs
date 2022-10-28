@@ -1,6 +1,7 @@
 ﻿using CollectionViewDemo.MVVM.Models;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace CollectionViewDemo.MVVM.ViewModels
 {
     public class ProductViewModel
     {
-        public List<ProductsGroup> Products { get; set; } = new List<ProductsGroup>();
+        public ObservableCollection<ProductsGroup> Products { get; set; } = new ObservableCollection<ProductsGroup>();
 
         public ProductViewModel()
         {
@@ -22,7 +23,19 @@ namespace CollectionViewDemo.MVVM.ViewModels
                 into groups
                 select
                     new ProductsGroup(groups.Key, groups.ToList());
-            Products = grouped.ToList();
+
+            //CollectionView: Scrolled
+            int id = 0;            
+            foreach(var group in grouped)
+            {
+                foreach(var product in group)
+                {
+                    product.Id = id;
+                    id++;
+                } 
+            }
+
+            Products = new ObservableCollection<ProductsGroup>(grouped.ToList());
         }
 
         private List<Product> LoadItems()
